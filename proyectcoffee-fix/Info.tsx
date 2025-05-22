@@ -6,16 +6,16 @@ import Footer from './Footer'; // Asegúrate de que la ruta sea correcta
 const Info = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ScrollView contentContainerStyle={styles.container}>
+      <ScrollView contentContainerStyle={[styles.container, { paddingBottom: 100 }]}>
         <View style={styles.header}>
           <FontAwesome5 name="coffee" size={28} color="#8B4513" />
           <Text style={styles.title}>COFFEE - FORECAST</Text>
         </View>
-
+        
         <View style={styles.section}>
           <Text style={styles.text}>
             El proyecto <Text style={styles.bold}>Desarrollo de una aplicación móvil de predicción automática de producción de café con Inteligencia Artificial </Text> 
-            se centra en la creación de un modelo predictivo para optimizar la producción de café en el cantón La Maná.
+            se centra en la creación de una app predictiva para optimizar la producción de café en el sector de Sacha Wiwa en el canton La Maná.
           </Text>
         </View>
 
@@ -51,20 +51,26 @@ const Info = () => {
         </View>
 
         <View style={styles.section}>
-          <View style={styles.subHeader}>
-            <FontAwesome5 name="laptop-code" size={22} color="#FF5722" />
-            <Text style={styles.subTitle}>Desarrollo de la Aplicación</Text>
-          </View>
-          <Text style={styles.text}>
-            🚀 La aplicación fue desarrollada con <Text style={styles.bold}>React Native</Text>, un framework de código abierto creado por Meta.
-          </Text>
-          <Text style={styles.text}>
-            🖥️ Su estructura está basada en <Text style={styles.bold}>Django</Text>, permitiendo la integración de la inteligencia artificial predictiva.
-          </Text>
-          <Text style={styles.text}>
-            🤖 La IA utiliza un modelo de aprendizaje basado en <Text style={styles.bold}>árboles de decisión</Text> almacenado en un archivo .pkl.
-          </Text>
-        </View>
+  <View style={styles.subHeader}>
+    <FontAwesome5 name="laptop-code" size={22} color="#FF5722" />
+    <Text style={styles.subTitle}>Desarrollo de la Aplicación</Text>
+  </View>
+
+  <Text style={styles.text}>
+    🚀 La aplicación fue desarrollada con <Text style={styles.bold}>React Native</Text>, un framework de código abierto creado por Meta.
+  </Text>
+  <Text style={styles.text}>
+    🖥️ Su estructura está basada en <Text style={styles.bold}>Django</Text>, permitiendo la integración de la inteligencia artificial predictiva.
+  </Text>
+  <Text style={styles.text}>
+    🤖 La IA utiliza un modelo de aprendizaje basado en <Text style={styles.bold}>árboles de decisión</Text> almacenado en un archivo .pkl.
+  </Text>
+  <Text style={styles.text}>
+    👨‍💻 Desarrolladores:{'\n'}
+    <Text style={styles.bold}>• Joshua Emanuel Vinces Manrique{'\n'}• Bryan Alexander Alvarez Real</Text>
+  </Text>
+</View>
+
       </ScrollView>
       <Footer />
     </SafeAreaView>
@@ -74,7 +80,7 @@ const Info = () => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#F4F4F4',
+    backgroundColor: '#c1a480',
   },
   container: {
     padding: 20,

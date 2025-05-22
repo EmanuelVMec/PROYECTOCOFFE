@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "proyectcoffee-fix",
+    "name": "Coffee Forecast",
     "slug": "proyectcoffee-fix",
-    "version": "1.0.0",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/logoapp.png",
     "userInterfaceStyle": "light",
@@ -17,13 +17,19 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/logoapp.png",
         "backgroundColor": "#008000"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.emanuelvmec.proyectcoffeefix"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "04e60cab-d447-4c84-93d3-861a1a3fe008"
+      }
     }
   }
 }

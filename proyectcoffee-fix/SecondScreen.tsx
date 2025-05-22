@@ -118,24 +118,53 @@ const SecondScreen = () => {
         <Image source={require('./assets/logoapp.png')} style={styles.logo} />
 
         <View style={styles.pickerContainer}>
-          <Picker selectedValue={selectedOption} style={styles.picker} onValueChange={handlePickerChange}>
-            <Picker.Item label="Manabi01" value="0" />
-            <Picker.Item label="Sarchimor" value="1" />
-          </Picker>
-        </View>
+  <Picker
+  selectedValue={selectedOption}
+  style={styles.picker}
+  onValueChange={handlePickerChange}
+>
+  <Picker.Item label="Manabi01" value="0" color="#003366" />
+  <Picker.Item label="Sarchimor" value="1" color="#003366" />
+</Picker>
+</View>
 
-        <View style={styles.grid}>
-          {Object.keys(inputs).map((key, index) => (
-            <TextInput
-              key={index}
-              style={styles.input}
-              placeholder={key}
-              value={inputs[key]}
-              keyboardType="numeric"
-              onChangeText={(text) => handleInputChange(key, text)}
-            />
-          ))}
-        </View>
+
+     {/* Campos antes de PH (índice 0 al 6) */}
+<View style={styles.grid}>
+  {Object.keys(inputs)
+    .slice(0, 7)
+    .map((key, index) => (
+      <View key={index} style={styles.inputGroupSingle}>
+        <Text style={styles.label}>{key}</Text>
+        <TextInput
+          style={styles.input}
+          value={inputs[key]}
+          keyboardType="numeric"
+          onChangeText={(text) => handleInputChange(key, text)}
+        />
+      </View>
+    ))}
+</View>
+
+{/* Campos desde PH hasta ARCILLA (doble columna) */}
+<View style={styles.doubleColumnGrid}>
+  {Object.keys(inputs)
+    .slice(7)
+    .map((key, index) => (
+      <View key={index} style={styles.inputGroup}>
+        <Text style={styles.label}>{key}</Text>
+        <TextInput
+          style={styles.input}
+          value={inputs[key]}
+          keyboardType="numeric"
+          onChangeText={(text) => handleInputChange(key, text)}
+        />
+      </View>
+    ))}
+</View>
+
+
+
 
         <Button title="Procesar" onPress={handleSubmit} disabled={!isComplete} />
         <Button title="Refrescar" onPress={handleRefresh} color="red" />
@@ -157,12 +186,51 @@ const SecondScreen = () => {
 
 const styles = StyleSheet.create({
   scrollContainer: { flexGrow: 1 },
-  container: { flex: 1, backgroundColor: '#F8F8F8', alignItems: 'center', paddingBottom: 90 },
+  container: { flex: 1, backgroundColor: '#c1a480', alignItems: 'center', paddingBottom: 90 },
+  inputGroupSingle: {
+  width: '220%', // campo completo en una sola columna
+  marginVertical: 5,
+},
+
+inputGroup: {
+  width: '50%', // dos columnas
+  marginVertical: 5,
+},
+
+label: {
+  marginBottom: 4,
+  fontSize: 14,
+  color: '#333',
+  fontWeight: 'bold',
+},
+
+grid1: {
+  width: '80%',
+  marginBottom: 20,
+},
+
+doubleColumnGrid: {
+  flexDirection: 'row',
+  flexWrap: 'wrap',
+  justifyContent: 'space-between',
+  width: '80%',
+  marginBottom: 20,
+},
+
   logo: { width: 100, height: 100, marginBottom: 20 },
-  pickerContainer: { borderWidth: 1, borderColor: '#ccc', borderRadius: 5, marginBottom: 20, backgroundColor: '#FFF', width: '80%' },
+  pickerContainer: { borderWidth: 1, borderColor: '#ccc', borderRadius: 5, marginBottom: 20, backgroundColor: '#f1f0e9', width: '80%' },
   picker: { height: 50, width: '100%' },
   grid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', marginBottom: 20, width: '80%' },
-  input: { width: '45%', padding: 10, borderWidth: 1, borderColor: '#ccc', marginVertical: 10, borderRadius: 5, backgroundColor: '#FFF' },
+input: {
+  width: '45%',
+  padding: 10,
+  borderWidth: 1,
+  borderColor: '#ccc',
+  marginVertical: 10,
+  borderRadius: 5,
+  backgroundColor: '#f1f0e9',
+  color: '#003366' // Azul oscuro
+},
   resultContainer: { marginTop: 20, padding: 10, backgroundColor: '#FFF', borderRadius: 5, width: '80%', alignItems: 'center', borderWidth: 1, borderColor: '#ccc' },
   resultTitle: { fontSize: 16, fontWeight: 'bold', marginBottom: 10 },
   resultText: { fontSize: 14 },
