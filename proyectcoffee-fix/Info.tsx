@@ -57,18 +57,24 @@ const Info = () => {
   </View>
 
   <Text style={styles.text}>
-    🚀 La aplicación fue desarrollada con <Text style={styles.bold}>React Native</Text>, un framework de código abierto creado por Meta.
-  </Text>
-  <Text style={styles.text}>
-    🖥️ Su estructura está basada en <Text style={styles.bold}>Django</Text>, permitiendo la integración de la inteligencia artificial predictiva.
-  </Text>
-  <Text style={styles.text}>
-    🤖 La IA utiliza un modelo de aprendizaje basado en <Text style={styles.bold}>árboles de decisión</Text> almacenado en un archivo .pkl.
-  </Text>
-  <Text style={styles.text}>
-    👨‍💻 Desarrolladores:{'\n'}
-    <Text style={styles.bold}>• Joshua Emanuel Vinces Manrique{'\n'}• Bryan Alexander Alvarez Real</Text>
-  </Text>
+  🌿 Este proyecto está vinculado con <Text style={[styles.bold, { color: 'green' }]}>FIASA</Text>, una organización ecuatoriana comprometida con la innovación agrícola.
+</Text>
+<Text style={styles.text}>
+  🧑‍🌾 <Text style={[styles.bold, { color: 'green' }]}>FIASA</Text> (Fertilizantes Industriales Agrícolas S.A.) trabaja en soluciones integrales para el desarrollo agrícola sostenible en Ecuador, brindando apoyo técnico y productos para mejorar la productividad de los cultivos.
+</Text>
+<Text style={styles.text}>
+  🚀 La aplicación fue desarrollada con <Text style={styles.bold}>React Native</Text>, un framework de código abierto creado por Meta.
+</Text>
+<Text style={styles.text}>
+  🖥️ Su estructura está basada en <Text style={styles.bold}>Django</Text>, permitiendo la integración de la inteligencia artificial predictiva.
+</Text>
+<Text style={styles.text}>
+  🤖 La IA utiliza un modelo de aprendizaje basado en <Text style={styles.bold}>árboles de decisión</Text> almacenado en un archivo .pkl.
+</Text>
+<Text style={styles.text}>
+  👨‍💻 Desarrolladores:{'\n'}
+  <Text style={styles.bold}>• Joshua Emanuel Vinces Manrique{'\n'}• Bryan Alexander Alvarez Real</Text>
+</Text>
 </View>
 
       </ScrollView>
