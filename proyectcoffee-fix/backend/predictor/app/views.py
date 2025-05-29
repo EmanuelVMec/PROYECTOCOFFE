@@ -22,7 +22,7 @@ except Exception as e:
 
 # Definir los nombres de las variables de salida
 output_columns = [
-    'EDAD_EN_DIAS', 'TIPO_DE_CAFE', 'TEMPERATURA_AMBIENTAL', 'HUMEDAD_AMBIENTAL',
+    'ALTURA_DE_LA_PLANTA', 'DIAMETRO_DE_TALLO', 'EDAD_EN_DIAS', 'TIPO_DE_CAFE', 'TEMPERATURA_AMBIENTAL', 'HUMEDAD_AMBIENTAL',
     'HUMEDAD_SUELO', 'PRESION_ATMOSFERICA', 'TEMPERATURA_SUELO', 'INDICE_DE_LLUVIA',
     'PH', 'CE', 'MO', 'NH4', 'P', 'S', 'K', 'Ca', 'Mg', 'Cu', 'B', 'Fe',
     'Zn', 'Mn', 'N_total', 'ARENA', 'LIMO', 'ARCILLA'

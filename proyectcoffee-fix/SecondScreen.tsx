@@ -4,7 +4,7 @@ import { Picker } from '@react-native-picker/picker';
 import * as FileSystem from 'expo-file-system';
 import Footer from './Footer';
 
-const API_URL = 'http://192.168.0.104:8000/api/prediccion/';
+const API_URL = 'http://10.10.49.65:8000/api/prediccion/';
 
 const SecondScreen = () => {
   const initialInputs = {
