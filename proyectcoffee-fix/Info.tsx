@@ -11,7 +11,7 @@ const Info = () => {
           <FontAwesome5 name="coffee" size={28} color="#8B4513" />
           <Text style={styles.title}>COFFEE - FORECAST</Text>
         </View>
-        
+
         <View style={styles.section}>
           <Text style={styles.text}>
             El proyecto <Text style={styles.bold}>Desarrollo de una aplicación móvil de predicción automática de producción de café con Inteligencia Artificial </Text> 
@@ -51,31 +51,35 @@ const Info = () => {
         </View>
 
         <View style={styles.section}>
-  <View style={styles.subHeader}>
-    <FontAwesome5 name="laptop-code" size={22} color="#FF5722" />
-    <Text style={styles.subTitle}>Desarrollo de la Aplicación</Text>
-  </View>
+          <View style={styles.subHeader}>
+            <FontAwesome5 name="laptop-code" size={22} color="#FF5722" />
+            <Text style={styles.subTitle}>Desarrollo de la Aplicación</Text>
+          </View>
 
-  <Text style={styles.text}>
-  🌿 Este proyecto está vinculado con <Text style={[styles.bold, { color: 'green' }]}>FIASA</Text>, una organización ecuatoriana comprometida con la innovación agrícola.
+          <Text style={styles.text}>
+            🌿 Este proyecto está vinculado con <Text style={[styles.bold, { color: 'green' }]}>FIASA</Text>, una organización ecuatoriana comprometida con la innovación agrícola.
+          </Text>
+          <Text style={styles.text}>
+            🧑‍🌾 <Text style={[styles.bold, { color: 'green' }]}>FIASA</Text> (Fertilizantes Industriales Agrícolas S.A.) trabaja en soluciones integrales para el desarrollo agrícola sostenible en Ecuador, brindando apoyo técnico y productos para mejorar la productividad de los cultivos.
+          </Text>
+          <Text style={styles.text}>
+            🚀 La aplicación fue desarrollada con <Text style={styles.bold}>React Native</Text>, un framework de código abierto creado por Meta.
+          </Text>
+          <Text style={styles.text}>
+            🖥️ Su estructura está basada en <Text style={styles.bold}>Django</Text>, permitiendo la integración de la inteligencia artificial predictiva.
+          </Text>
+          <Text style={styles.text}>
+            🤖 La IA utiliza un modelo de aprendizaje basado en <Text style={styles.bold}>árboles de decisión</Text> almacenado en un archivo .pkl.
+          </Text>
+          <Text style={styles.text}>
+  👨‍💻 Desarrolladores:
 </Text>
-<Text style={styles.text}>
-  🧑‍🌾 <Text style={[styles.bold, { color: 'green' }]}>FIASA</Text> (Fertilizantes Industriales Agrícolas S.A.) trabaja en soluciones integrales para el desarrollo agrícola sostenible en Ecuador, brindando apoyo técnico y productos para mejorar la productividad de los cultivos.
+<Text style={styles.bold}>
+  • Joshua Emanuel Vinces Manrique{'\n'}
+  • Bryan Alexander Alvarez Real
 </Text>
-<Text style={styles.text}>
-  🚀 La aplicación fue desarrollada con <Text style={styles.bold}>React Native</Text>, un framework de código abierto creado por Meta.
-</Text>
-<Text style={styles.text}>
-  🖥️ Su estructura está basada en <Text style={styles.bold}>Django</Text>, permitiendo la integración de la inteligencia artificial predictiva.
-</Text>
-<Text style={styles.text}>
-  🤖 La IA utiliza un modelo de aprendizaje basado en <Text style={styles.bold}>árboles de decisión</Text> almacenado en un archivo .pkl.
-</Text>
-<Text style={styles.text}>
-  👨‍💻 Desarrolladores:{'\n'}
-  <Text style={styles.bold}>• Joshua Emanuel Vinces Manrique{'\n'}• Bryan Alexander Alvarez Real</Text>
-</Text>
-</View>
+
+        </View>
 
       </ScrollView>
       <Footer />
@@ -86,28 +90,41 @@ const Info = () => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#c1a480',
+    backgroundColor: '#e9e4dc',
   },
   container: {
     padding: 20,
+    backgroundColor: '#e9e4dc',
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 15,
+    backgroundColor: '#e9e4dc',
+    padding: 10,
+    borderRadius: 12,
+    shadowColor: '#ffffff',
+    shadowOffset: { width: -4, height: -4 },
+    shadowOpacity: 1,
+    shadowRadius: 6,
+    elevation: 4,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginLeft: 10,
-    color: '#8B4513',
+    color: '#5e3c1d',
   },
   section: {
     marginBottom: 20,
-    backgroundColor: '#FFF',
+    backgroundColor: '#e0dad2',
     padding: 15,
-    borderRadius: 10,
+    borderRadius: 12,
+    shadowColor: '#ffffff',
+    shadowOffset: { width: -3, height: -3 },
+    shadowOpacity: 1,
+    shadowRadius: 5,
     elevation: 3,
   },
   subHeader: {
@@ -119,26 +136,31 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginLeft: 10,
-    color: '#333',
+    color: '#3c2a16',
   },
   text: {
     fontSize: 16,
     textAlign: 'justify',
     marginBottom: 10,
-    color: '#555',
+    color: '#3c2a16',
   },
   bold: {
     fontWeight: 'bold',
   },
   guideContainer: {
-    backgroundColor: '#FFF3E0',
+    backgroundColor: '#f2e9dc',
     padding: 15,
-    borderRadius: 10,
+    borderRadius: 12,
+    shadowColor: '#ffffff',
+    shadowOffset: { width: -3, height: -3 },
+    shadowOpacity: 1,
+    shadowRadius: 5,
+    elevation: 3,
   },
   guideText: {
     fontSize: 16,
     paddingVertical: 5,
-    color: '#333',
+    color: '#3c2a16',
   },
   listItem: {
     flexDirection: 'row',
@@ -148,7 +170,7 @@ const styles = StyleSheet.create({
   listText: {
     fontSize: 16,
     marginLeft: 10,
-    color: '#555',
+    color: '#3c2a16',
   },
 });
 
