@@ -7,17 +7,38 @@ import { Picker } from '@react-native-picker/picker';
 import * as FileSystem from 'expo-file-system';
 import Footer from './Footer';
 
-const API_URL = 'http://192.168.0.101:8000/api/prediccion/';
+const API_URL = 'http://192.168.0.105:8000/api/prediccion/';
+
+const labelMap = {
+  EDAD_EN_DIAS: 'EDAD_EN_DIAS',
+  TEMPERATURA_AMBIENTAL: 'TEMPERATURA_AMBIENTAL (°C)',
+  HUMEDAD_AMBIENTAL: 'HUMEDAD_AMBIENTAL (%)',
+  HUMEDAD_SUELO: 'HUMEDAD_SUELO (%)',
+  PRESION_ATMOSFERICA: 'PRESIÓN_ATMOSFÉRICA (hPa)',
+  TEMPERATURA_SUELO: 'TEMPERATURA_SUELO (°C)',
+  INDICE_DE_LLUVIA: 'ÍNDICE_DE_LLUVIA (mm)',
+  PH: 'PH',
+  CE: 'CE (dS/m)',
+  MO: 'MO (%)',
+  NH4: 'NH₄ (mg/kg)',
+  P: 'P (mg/kg)',
+  S: 'S (mg/kg)',
+  K: 'K (mg/kg)',
+  Ca: 'Ca (cmol/kg)',
+  Mg: 'Mg (cmol/kg)',
+  Cu: 'Cu (mg/kg)',
+  B: 'B (mg/kg)',
+  Fe: 'Fe (mg/kg)',
+  Zn: 'Zn (mg/kg)',
+  Mn: 'Mn (mg/kg)',
+  N_total: 'N_total (%)',
+  ARENA: 'ARENA (%)',
+  LIMO: 'LIMO (%)',
+  ARCILLA: 'ARCILLA (%)'
+};
 
 const SecondScreen = () => {
-  const initialInputs = {
-    EDAD_EN_DIAS: '', TEMPERATURA_AMBIENTAL: '', HUMEDAD_AMBIENTAL: '',
-    HUMEDAD_SUELO: '', PRESION_ATMOSFERICA: '', TEMPERATURA_SUELO: '',
-    INDICE_DE_LLUVIA: '', PH: '', CE: '', MO: '', NH4: '', P: '', S: '',
-    K: '', Ca: '', Mg: '', Cu: '', B: '', Fe: '', Zn: '', Mn: '',
-    N_total: '', ARENA: '', LIMO: '', ARCILLA: ''
-  };
-
+  const initialInputs = Object.keys(labelMap).reduce((acc, key) => ({ ...acc, [key]: '' }), {});
   const [inputs, setInputs] = useState(initialInputs);
   const [selectedOption, setSelectedOption] = useState('0');
   const [prediction, setPrediction] = useState(null);
@@ -51,12 +72,15 @@ const SecondScreen = () => {
       });
 
       const result = await response.json();
-      result.error
-        ? Alert.alert('Error', result.error)
-        : setPrediction(result.prediction);
+      if (result.error) {
+        Alert.alert('Error', result.error);
+      } else {
+        setPrediction(result.prediction);
+      }
 
-    } catch {
+    } catch (error) {
       Alert.alert('Error', 'No se pudo conectar con el servidor.');
+      console.error(error); // Agregado para depurar cualquier error
     }
   };
 
@@ -79,8 +103,9 @@ const SecondScreen = () => {
       } else {
         Alert.alert('Error', 'No hay predicciones para guardar.');
       }
-    } catch {
+    } catch (error) {
       Alert.alert('Error', 'No se pudo guardar el archivo.');
+      console.error(error); // Agregado para depurar cualquier error
     }
   };
 
@@ -103,11 +128,10 @@ const SecondScreen = () => {
           </View>
         </View>
 
-        {/* Campos individuales */}
         <View style={styles.grid}>
           {Object.keys(inputs).slice(0, 7).map((key, index) => (
             <View key={index} style={styles.inputGroupSingle}>
-              <Text style={styles.label}>{key}</Text>
+              <Text style={styles.label}>{labelMap[key] || key}</Text>
               <TextInput
                 style={styles.input}
                 value={inputs[key]}
@@ -118,11 +142,10 @@ const SecondScreen = () => {
           ))}
         </View>
 
-        {/* Campos dobles */}
         <View style={styles.doubleColumnGrid}>
           {Object.keys(inputs).slice(7).map((key, index) => (
             <View key={index} style={styles.inputGroup}>
-              <Text style={styles.label}>{key}</Text>
+              <Text style={styles.label}>{labelMap[key] || key}</Text>
               <TextInput
                 style={styles.input}
                 value={inputs[key]}
@@ -146,9 +169,7 @@ const SecondScreen = () => {
           <View style={styles.resultContainer}>
             <Text style={styles.resultTitle}>Resultados de la Predicción:</Text>
             {Object.entries(prediction).map(([key, value]) => (
-              <Text key={key} style={styles.resultText}>
-                {`${key}: ${parseFloat(value).toFixed(2)}`}
-              </Text>
+              <Text key={key} style={styles.resultText}>{`${key}: ${parseFloat(value).toFixed(2)}`}</Text>
             ))}
             <View style={styles.softButton}>
               <Button title="Guardar" onPress={handleSave} color="#1f7a3a" />
@@ -160,6 +181,7 @@ const SecondScreen = () => {
     </ScrollView>
   );
 };
+
 
 const styles = StyleSheet.create({
   scrollContainer: { flexGrow: 1 },
