@@ -22,10 +22,8 @@ except Exception as e:
 
 # Definir los nombres de las variables de salida
 output_columns = [
-    'ALTURA_DE_LA_PLANTA', 'DIAMETRO_DE_TALLO', 'EDAD_EN_DIAS', 'TIPO_DE_CAFE', 'TEMPERATURA_AMBIENTAL', 'HUMEDAD_AMBIENTAL',
-    'HUMEDAD_SUELO', 'PRESION_ATMOSFERICA', 'TEMPERATURA_SUELO', 'INDICE_DE_LLUVIA',
-    'PH', 'CE', 'MO', 'NH4', 'P', 'S', 'K', 'Ca', 'Mg', 'Cu', 'B', 'Fe',
-    'Zn', 'Mn', 'N_total', 'ARENA', 'LIMO', 'ARCILLA'
+        'Altura_de_planta_AP', 'Diametro_de_tallo_DT'  # Salidas del modelo (alturas y diámetro)
+
 ]
 
 @api_view(['POST'])
@@ -37,13 +35,13 @@ def predict_cafe(request):
         data = request.data
 
         features = [
-    data['ARCILLA'], data['ARENA'], data['B'], data['CE'], data['Ca'],
-    data['Cu'], data['EDAD_EN_DIAS'], data['Fe'], data['HUMEDAD_AMBIENTAL'],
-    data['HUMEDAD_SUELO'], data['INDICE_DE_LLUVIA'], data['K'], data['LIMO'],
-    data['MO'], data['Mg'], data['Mn'], data['NH4'], data['N_total'],
-    data['P'], data['PH'], data['PRESION_ATMOSFERICA'], data['S'],
-    data['TEMPERATURA_AMBIENTAL'], data['TEMPERATURA_SUELO'], data['TIPO_DE_CAFE'], data['Zn']
-]
+            data['ARCILLA'], data['ARENA'], data['B'], data['CE'], data['Ca'],
+            data['Cu'], data['EDAD_EN_DIAS'], data['Fe'], data['HUMEDAD_AMBIENTAL'],
+            data['HUMEDAD_SUELO'], data['INDICE_DE_LLUVIA'], data['K'], data['LIMO'],
+            data['MO'], data['Mg'], data['Mn'], data['NH4'], data['N_total'],
+            data['P'], data['PH'], data['PRESION_ATMOSFERICA'], data['S'],
+            data['TEMPERATURA_AMBIENTAL'], data['TEMPERATURA_SUELO'], data['TIPO_DE_CAFE'], data['Zn']
+        ]
 
 
         # 🔍 Depuración: Ver características
