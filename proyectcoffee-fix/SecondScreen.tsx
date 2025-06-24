@@ -7,7 +7,7 @@ import { Picker } from '@react-native-picker/picker';
 import * as FileSystem from 'expo-file-system';
 import Footer from './Footer';
 
-const API_URL = 'http://192.168.0.105:8000/api/prediccion/';
+const API_URL = 'https://django-railway-coffeeforecast.up.railway.app/api/prediccion/';
 
 const labelMap = {
   EDAD_EN_DIAS: 'EDAD_EN_DIAS',
