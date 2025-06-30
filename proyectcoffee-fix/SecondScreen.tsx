@@ -5,9 +5,10 @@ import {
 } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import * as FileSystem from 'expo-file-system';
+import { StorageAccessFramework } from 'expo-file-system';
 import Footer from './Footer';
-import * as Print from 'expo-print';
-import * as StorageAccessFramework from 'expo-file-system';
+import * as XLSX from 'xlsx';
+import { usePredictionStore } from './usePredictionStore';
 
 const API_URL = 'https://django-railway-coffeeforecast.up.railway.app/api/prediccion/';
 
@@ -56,58 +57,62 @@ const SecondScreen = () => {
 
   const handlePickerChange = (value) => setSelectedOption(value);
 
-  const handleSubmit = async () => {
-    if (!isComplete) {
-      Alert.alert('Error', 'Por favor complete todos los campos antes de procesar.');
-      return;
-    }
+const handleSubmit = async () => {
+  if (!isComplete) {
+    Alert.alert('Error', 'Por favor complete todos los campos antes de procesar.');
+    return;
+  }
 
-    const values = Object.values(inputs).map(v => parseFloat(v));
-    const allZeros = values.every(v => v === 0);
-    const allEqual = values.every(v => v === values[0]);
+  const values = Object.values(inputs).map(v => parseFloat(v));
+  const allZeros = values.every(v => v === 0);
+  const allEqual = values.every(v => v === values[0]);
 
-    const edad = parseFloat(inputs.EDAD_EN_DIAS);
-    if (isNaN(edad) || edad < 30) {
-      Alert.alert('Error', 'La edad en días debe ser mayor o igual a 30 para procesar la predicción.');
-      return;
-    }
+  const edad = parseFloat(inputs.EDAD_EN_DIAS);
+  if (isNaN(edad) || edad < 30) {
+    Alert.alert('Error', 'La edad en días debe ser mayor o igual a 30 para procesar la predicción.');
+    return;
+  }
 
-    const frequencyMap = {};
-    values.forEach(v => {
-      frequencyMap[v] = (frequencyMap[v] || 0) + 1;
+  const frequencyMap = {};
+  values.forEach(v => {
+    frequencyMap[v] = (frequencyMap[v] || 0) + 1;
+  });
+  const maxCount = Math.max(...Object.values(frequencyMap));
+  const percentageEqual = maxCount / values.length;
+
+  if (allZeros || allEqual || percentageEqual >= 0.9) {
+    Alert.alert('Error', 'Los datos ingresados no son lo suficientemente variados para realizar la predicción.');
+    return;
+  }
+
+  try {
+    const requestData = {
+      'TIPO_DE_CAFE': selectedOption,
+      ...Object.fromEntries(Object.entries(inputs).map(([k, v]) => [k, parseFloat(v) || 0]))
+    };
+
+    const response = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(requestData),
     });
-    const maxCount = Math.max(...Object.values(frequencyMap));
-    const percentageEqual = maxCount / values.length;
 
-    if (allZeros || allEqual || percentageEqual >= 0.9) {
-      Alert.alert('Error', 'Los datos ingresados no son lo suficientemente variados para realizar la predicción.');
-      return;
+    const result = await response.json();
+    if (result.error) {
+      Alert.alert('Error', result.error);
+    } else {
+      setPrediction(result.prediction);
+      const store = usePredictionStore.getState();
+      store.setPrediction(result.prediction);
+      store.setInputs(inputs);
+      store.setTipoCafe(Number(selectedOption)); // 🔧 Aseguramos que se guarda como número
     }
+  } catch (error) {
+    Alert.alert('Error', 'No se pudo conectar con el servidor.');
+    console.error(error);
+  }
+};
 
-    try {
-      const requestData = {
-        'TIPO_DE_CAFE': selectedOption,
-        ...Object.fromEntries(Object.entries(inputs).map(([k, v]) => [k, parseFloat(v) || 0]))
-      };
-
-      const response = await fetch(API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(requestData),
-      });
-
-      const result = await response.json();
-      if (result.error) {
-        Alert.alert('Error', result.error);
-      } else {
-        setPrediction(result.prediction);
-      }
-
-    } catch (error) {
-      Alert.alert('Error', 'No se pudo conectar con el servidor.');
-      console.error(error);
-    }
-  };
 
   const handleRefresh = () => {
     setInputs(initialInputs);
@@ -117,42 +122,63 @@ const SecondScreen = () => {
   };
 
   const handleSave = async () => {
-    try {
-      if (!prediction) {
-        Alert.alert('Error', 'No hay predicciones para guardar.');
-        return;
-      }
+  try {
+    const predictionState = usePredictionStore.getState();
+    const prediction = predictionState.prediction;
+    const inputData = predictionState.inputs;
+    const tipoCafe = predictionState.tipoCafe ?? 0; // 🔧 Valor por defecto numérico
 
-      const predictionText = Object.entries(prediction).map(([k, v]) => {
-        const value = parseFloat(v).toFixed(2);
-        return `${k}: ${value}${k.toLowerCase().includes('altura') || k.toLowerCase().includes('diametro') ? ' cm' : ''}`;
-      }).join('\n');
-
-      const filename = `Prediccion_${Date.now()}.txt`;
-      const tempUri = `${FileSystem.cacheDirectory}${filename}`;
-      await FileSystem.writeAsStringAsync(tempUri, predictionText);
-
-      const permissions = await StorageAccessFramework.requestDirectoryPermissionsAsync();
-
-      if (!permissions.granted) {
-        Alert.alert('Permiso requerido', 'Debes permitir acceso para guardar el archivo.');
-        return;
-      }
-
-      const fileUri = await StorageAccessFramework.createFileAsync(
-        permissions.directoryUri,
-        filename,
-        'text/plain'
-      );
-
-      await FileSystem.writeAsStringAsync(fileUri, predictionText);
-      Alert.alert('Éxito', 'Archivo guardado con éxito.');
-
-    } catch (error) {
-      console.error(error);
-      Alert.alert('Error', 'No se pudo guardar el archivo.');
+    if (!prediction) {
+      Alert.alert('Error', 'No hay predicciones para guardar.');
+      return;
     }
-  };
+
+    const nombreCafe = tipoCafe === 0 ? 'Manabi01' : 'Sarchimor'; // 🔧 Comparación correcta
+
+    const data = [
+      ['Tipo de Café', nombreCafe],
+      ['', ''],
+      ['Dato', 'Valor'],
+      ...Object.entries(inputData),
+      ['', ''],
+      ['Resultado de la predicción', ''],
+      ...Object.entries(prediction).map(([k, v]) => [
+        k,
+        `${parseFloat(v).toFixed(2)}${
+          k.toLowerCase().includes('altura') || k.toLowerCase().includes('diametro') ? ' cm' : ''
+        }`
+      ]),
+    ];
+
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.aoa_to_sheet(data);
+    XLSX.utils.book_append_sheet(wb, ws, 'Prediccion');
+
+    const wbout = XLSX.write(wb, { type: 'base64', bookType: 'xlsx' });
+    const filename = `Prediccion_${Date.now()}.xlsx`;
+
+    const permissions = await StorageAccessFramework.requestDirectoryPermissionsAsync();
+    if (!permissions.granted) {
+      Alert.alert('Permiso requerido', 'Debes permitir acceso para guardar el archivo.');
+      return;
+    }
+
+    const fileUri = await StorageAccessFramework.createFileAsync(
+      permissions.directoryUri,
+      filename,
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    );
+
+    await FileSystem.writeAsStringAsync(fileUri, wbout, {
+      encoding: FileSystem.EncodingType.Base64,
+    });
+
+    Alert.alert('Éxito', 'Archivo Excel guardado correctamente.');
+  } catch (err) {
+    console.error(err);
+    Alert.alert('Error', 'No se pudo guardar el archivo.');
+  }
+};
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
