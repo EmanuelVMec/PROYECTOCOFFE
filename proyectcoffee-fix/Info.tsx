@@ -60,7 +60,7 @@ const Info = () => {
             🌿 Este proyecto está vinculado con <Text style={[styles.bold, { color: 'green' }]}>FIASA</Text>, una organización ecuatoriana comprometida con la innovación agrícola.
           </Text>
           <Text style={styles.text}>
-            🧑‍🌾 <Text style={[styles.bold, { color: 'green' }]}>FIASA</Text> (Fertilizantes Industriales Agrícolas S.A.) trabaja en soluciones integrales para el desarrollo agrícola sostenible en Ecuador, brindando apoyo técnico y productos para mejorar la productividad de los cultivos.
+            🧑‍🌾 <Text style={[styles.bold, { color: 'green' }]}>FIASA</Text> trabaja en soluciones integrales para el desarrollo agrícola sostenible en Ecuador, brindando apoyo técnico y productos para mejorar la productividad de los cultivos.
           </Text>
           <Text style={styles.text}>
             🚀 La aplicación fue desarrollada con <Text style={styles.bold}>React Native</Text>, un framework de código abierto creado por Meta.

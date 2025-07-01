@@ -31,8 +31,7 @@ const Repositorio = () => {
     .map(async (f) => {
       const info = await FileSystem.getInfoAsync(f);
       const formattedDate = info.modificationTime
-        ? new Date(info.modificationTime * 1000).toLocaleString()
-        : 'Sin fecha';
+        
       return {
         uri: f,
         name: decodeURIComponent(f.split('/').pop()),

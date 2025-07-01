@@ -155,7 +155,11 @@ const handleSubmit = async () => {
     XLSX.utils.book_append_sheet(wb, ws, 'Prediccion');
 
     const wbout = XLSX.write(wb, { type: 'base64', bookType: 'xlsx' });
-    const filename = `Prediccion_${Date.now()}.xlsx`;
+const today = new Date();
+const day = String(today.getDate()).padStart(2, '0');
+const month = String(today.getMonth() + 1).padStart(2, '0'); // los meses van de 0 a 11
+const year = today.getFullYear();
+const filename = `Prediccion_${day}-${month}-${year}.xlsx`;
 
     const permissions = await StorageAccessFramework.requestDirectoryPermissionsAsync();
     if (!permissions.granted) {
